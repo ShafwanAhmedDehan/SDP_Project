@@ -25,6 +25,15 @@ export default function ViewWishlist() {
             })
     }
 
+    const deleteProductFromWishlist = async (productId) => {
+        console.log(productId);
+        axios.delete(`http://localhost:3000/delete/product/wishlist/${uid}/${productId}`)
+          .then((response) => {
+            // Remove the deleted product from the wishProducts state
+            window.location.reload();
+          })
+    }
+
     return (
         <>
             <Navbar/>
@@ -43,6 +52,9 @@ export default function ViewWishlist() {
                             <th scope="col" class="px-6 py-3">
                                 Description
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +70,10 @@ export default function ViewWishlist() {
                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                 {item.productID.description}
                             </td>
-                        </tr>// Your mapping logic here
+                            <td class="px-6 py-4">
+                                <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline" onClick={() => deleteProductFromWishlist(item._id)}>Remove</a>
+                            </td>
+                        </tr>
                     ))
                     ) : (
                     <p>No wishlist items found.</p>

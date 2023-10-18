@@ -404,6 +404,20 @@ app.delete('/delete/wishlist/:buyerID', async (req, res) => {
   }
 });
 
+//delete a single product from the wishlist
+app.delete('/delete/product/wishlist/:uid/:productId', async (req, res) => {
+  try {
+    const { uid, productId } = req.params;
+
+    //look for the item and delete it
+    await Wishlist.findOneAndDelete({ buyerID : uid, _id : productId });
+    
+    res.json({ message: 'Wishlist item deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete wishlist item' });
+  }
+});
+
 
 //-----Notification APIs-----
 //create notification using id
